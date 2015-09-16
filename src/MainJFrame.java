@@ -31,6 +31,8 @@ public class MainJFrame extends JFrame {
 	public static JPanel loginPanel;
 	public static JPanel channelPanel;
 	public static JPanel registerPanel;
+	public static JPanel googleMapPanel;
+	public static User userLogin = null;
 	
 	private static MySqlFunctions mySqlFunctions;
 
@@ -61,6 +63,7 @@ public class MainJFrame extends JFrame {
 		loginPanel = new LoginJPanel();
 		channelPanel = new ChannelJPanel();
 		registerPanel = new RegisterJPanel();
+		googleMapPanel = new GoogleMapJPanel();
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {

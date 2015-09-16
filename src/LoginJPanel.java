@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 public class LoginJPanel extends JPanel {
 	private JTextField usernameTextField;
 	private JTextField passwordTextField;
-	private User userLogin;
 
 	public LoginJPanel() {
 		setLayout(null);
@@ -39,8 +38,8 @@ public class LoginJPanel extends JPanel {
 				String username = usernameTextField.getText();
 				String password = passwordTextField.getText();
 				MySqlFunctions mySqlFunctions = new MySqlFunctions();
-				userLogin = mySqlFunctions.login(username, password);
-				if (userLogin == null) {
+				MainJFrame.userLogin = mySqlFunctions.login(username, password);
+				if (MainJFrame.userLogin == null) {
 					JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
 					usernameTextField.setText("");
 					passwordTextField.setText("");
