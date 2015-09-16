@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class MySqlFunctions {
 	private final String urlHost = "http://enddev.site50.net/RoomChannelPHPServer/";
-
+	//ss commitchoi
 	private String sendRequest(Map<String, String> params) {
 		BufferedReader in;
 		String result = "";
