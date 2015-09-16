@@ -16,7 +16,7 @@ public class ChannelJPanel extends JPanel {
 				MainJFrame.contentPane.removeAll();
 				MainJFrame.contentPane.validate();
 				MainJFrame.contentPane.repaint();
-				
+				//ss
 				MainJFrame.contentPane.add(MainJFrame.googleMapPanel);
 				MainJFrame.contentPane.validate();
 				MainJFrame.contentPane.repaint();
