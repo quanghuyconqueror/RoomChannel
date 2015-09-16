@@ -2,6 +2,16 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/Quang Huy/Downloads/mysql-connector-java-5.1.14-bin.jar/mysql-connector-java-5.1.14-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quang Huy/Downloads/org.json.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms.jar" sourcepath="lib/jgoodies-forms-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/RoomChannel/lib/jgoodies-forms-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jgoodies-common.jar" sourcepath="lib/jgoodies-common-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/RoomChannel/lib/jgoodies-common-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
