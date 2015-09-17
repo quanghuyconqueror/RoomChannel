@@ -14,12 +14,13 @@ public class LoginJPanel extends JPanel {
 
 	public LoginJPanel() {
 		setLayout(null);
+		setSize(800, 600);
 		JLabel lblNewLabel = new JLabel("Tên đăng nhập:");
-		lblNewLabel.setBounds(69, 77, 113, 14);
+		lblNewLabel.setBounds(265, 139, 113, 14);
 		add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Mật khẩu:");
-		lblNewLabel_1.setBounds(69, 139, 113, 14);
+		lblNewLabel_1.setBounds(265, 261, 113, 14);
 		add(lblNewLabel_1);
 		
 		usernameTextField = new JTextField();
@@ -28,7 +29,7 @@ public class LoginJPanel extends JPanel {
 		usernameTextField.setColumns(10);
 		
 		passwordTextField = new JTextField();
-		passwordTextField.setBounds(233, 136, 143, 20);
+		passwordTextField.setBounds(502, 258, 143, 20);
 		add(passwordTextField);
 		passwordTextField.setColumns(10);
 		
@@ -58,7 +59,7 @@ public class LoginJPanel extends JPanel {
 				}
 			}
 		});
-		loginButton.setBounds(81, 220, 124, 23);
+		loginButton.setBounds(329, 326, 124, 23);
 		add(loginButton);
 		
 		JButton registerButton = new JButton("Tạo tài khoản");
@@ -73,7 +74,7 @@ public class LoginJPanel extends JPanel {
 				MainJFrame.contentPane.repaint();
 			}
 		});
-		registerButton.setBounds(249, 220, 124, 23);
+		registerButton.setBounds(521, 326, 124, 23);
 		add(registerButton);
 
 	}

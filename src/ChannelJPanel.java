@@ -1,12 +1,20 @@
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class ChannelJPanel extends JPanel {
@@ -14,7 +22,7 @@ public class ChannelJPanel extends JPanel {
 	private ArrayList<Room> rooms = null;
 	
 	public ChannelJPanel() {
-		
+		setSize(800, 600);
 		JButton googleMapButton = new JButton("Google Map");
 		googleMapButton.setBounds(265, 5, 91, 23);
 		googleMapButton.addActionListener(new ActionListener() {
@@ -30,14 +38,14 @@ public class ChannelJPanel extends JPanel {
 		});
 		
 		JButton roomButton = new JButton("Room");
-		roomButton.setBounds(93, 5, 61, 23);
+		roomButton.setBounds(185, 39, 61, 23);
 		roomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainJFrame.contentPane.removeAll();
 				MainJFrame.contentPane.validate();
 				MainJFrame.contentPane.repaint();
 				
-				MainJFrame.contentPane.add(new RoomJPanel());
+				MainJFrame.contentPane.add(new RoomJPanel(rooms.get(0)));
 				MainJFrame.contentPane.validate();
 				MainJFrame.contentPane.repaint();
 			}
@@ -67,6 +75,24 @@ public class ChannelJPanel extends JPanel {
 		}
 		
 		JList list = new JList(model);
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JList listClicked = (JList) e.getSource();
+				if (e.getClickCount() == 2) {
+					// double click detected
+					int index = listClicked.locationToIndex(e.getPoint());
+					MainJFrame.contentPane.removeAll();
+					MainJFrame.contentPane.validate();
+					MainJFrame.contentPane.repaint();
+					
+					MainJFrame.contentPane.add(new RoomJPanel(rooms.get(index)));
+					MainJFrame.contentPane.validate();
+					MainJFrame.contentPane.repaint();
+		
+				}
+			}
+		});
 		scrollPane.setViewportView(list);
 		
 		JButton submitRoom = new JButton("\u0110\u0103ng ph\u00F2ng");
@@ -82,8 +108,10 @@ public class ChannelJPanel extends JPanel {
 				MainJFrame.contentPane.repaint();
 			}
 		});
-		submitRoom.setBounds(10, 39, 101, 23);
+		submitRoom.setBounds(366, 5, 101, 23);
 		add(submitRoom);
+		
+		
 		
 	
 

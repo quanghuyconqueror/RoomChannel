@@ -62,6 +62,21 @@ class DB_Functions {
         }
 	}
 	
+	public function postRoom($address, $description, $latitude, $longitude, $city, $images, $cost, $userPostID) {
+		mysql_query("set names 'utf8'");
+		$booked = false;
+		$result = mysql_query("INSERT INTO Rooms(Address, Description, TimePosted, Latitude, Longitude, City, Images, Cost, Booked, UserPostID) VALUES('$address', '$description', NOW(), '$latitude', '$longitude', '$city', '$images', '$cost', '$booked', '$userPostID')");
+		if ($result) {
+			$lastPostID = mysql_insert_id();
+			$room = mysql_query("SELECT * FROM Rooms WHERE RoomID = '$lastPostID'");
+			return $room;
+		}
+		else {
+			return false;
+		}
+	
+	}
+	
 	public function getUserByUsernameAndPassword($username, $password) {
 		mysql_query("set names 'utf8'");
         $result = mysql_query("SELECT * FROM Users WHERE Username = '$username' AND Password = '$password'");

@@ -1,8 +1,12 @@
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -18,6 +22,7 @@ public class PostRoomJPanel extends JPanel {
 	 */
 	public PostRoomJPanel() {
 		setLayout(null);
+		setSize(800, 600);
 		
 		addressTF = new JTextField();
 		addressTF.setBounds(258, 24, 167, 20);
@@ -63,11 +68,33 @@ public class PostRoomJPanel extends JPanel {
 		lblNewLabel_4.setBounds(76, 237, 86, 14);
 		add(lblNewLabel_4);
 		
-		JButton submitButton = new JButton("\u0110\u0103ng");
+		JButton submitButton = new JButton("Đăng");
+		submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Room roomPosted = null;
+				String address= addressTF.getText();
+				String description = descriptionTF.getText();
+				String latitude = "Test";
+				String longitude = "Test";
+				String city = "Test";
+				String images = "Test";
+				String cost = costTF.getText();
+				String userPostID = "1";
+				
+				MySqlFunctions mySqlFunctions = new MySqlFunctions();
+				roomPosted = mySqlFunctions.postRoom(address, description, latitude, longitude, city, images, cost, userPostID);
+				if (roomPosted == null) {
+					JOptionPane.showMessageDialog(null, "Đăng phòng thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, roomPosted.toString(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		submitButton.setBounds(118, 265, 91, 23);
 		add(submitButton);
 		
-		JButton backButton = new JButton("Tr\u1EDF v\u1EC1");
+		JButton backButton = new JButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -80,7 +107,12 @@ public class PostRoomJPanel extends JPanel {
 				MainJFrame.contentPane.repaint();
 			}
 		});
-		backButton.setBounds(253, 265, 91, 23);
+		backButton.setBounds(10, 10, 30, 30);
+		ImageIcon backIcon = new ImageIcon("icon/back_icon.png");
+		Image img = backIcon.getImage();
+		Image newimg = img.getScaledInstance(backButton.getWidth(), backButton.getHeight(), Image.SCALE_SMOOTH);
+		backIcon = new ImageIcon(newimg);
+		backButton.setIcon(backIcon);
 		add(backButton);
 
 	}

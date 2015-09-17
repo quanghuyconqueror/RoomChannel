@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,10 +32,13 @@ public class RoomJPanel extends JPanel implements ActionListener {
     private JButton prevButton = new JButton();
     private JButton nextButton = new JButton();
     private JComboBox favorites;
+    private Room room;
+    private final JPanel titlePanel = new JPanel();
+    private final JButton backButton = new JButton();
 
-    public RoomJPanel() {
-        this.setLayout(new BorderLayout());
-
+    public RoomJPanel(Room room) {
+    	setSize(800, 600);
+        this.room = room;
         list.add(urlImages + "1.jpg");
         list.add(urlImages + "2.jpg");
         list.add(urlImages + "3.jpg");
@@ -44,18 +48,36 @@ public class RoomJPanel extends JPanel implements ActionListener {
         
 
         for (int i = 0; i < list.size(); i++) cache.add(i, null);
-
-        JLabel titleLabel = new JLabel();
-        titleLabel.setText("ImageSlider");
-        titleLabel.setHorizontalAlignment(JLabel.CENTER);
-        titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
-        titleLabel.setBorder(border);
-        this.add(titleLabel, BorderLayout.NORTH);
+        setLayout(null);
+        titlePanel.setBounds(0, 0, 800, 49);
+        
+        add(titlePanel);
+        titlePanel.setLayout(null);
+        backButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainJFrame.contentPane.removeAll();
+				MainJFrame.contentPane.validate();
+				MainJFrame.contentPane.repaint();
+				
+				MainJFrame.contentPane.add(MainJFrame.channelPanel);
+				MainJFrame.contentPane.validate();
+				MainJFrame.contentPane.repaint();
+        	}
+        });
+        backButton.setBounds(10, 10, 30, 30);
+        ImageIcon backIcon = new ImageIcon("icon/back_icon.png");
+		Image img = backIcon.getImage();
+		Image newimg = img.getScaledInstance(backButton.getWidth(), backButton.getHeight(), Image.SCALE_SMOOTH);
+		backIcon = new ImageIcon(newimg);
+		backButton.setIcon(backIcon);
+        
+        titlePanel.add(backButton);
+        imageLabel.setBounds(0, 50, 800, 490);
 
         imageLabel.setIcon(getImage(0));
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setBorder(border);
-        this.add(imageLabel, BorderLayout.CENTER);
+        this.add(imageLabel);
 
         favorites = new JComboBox(
             list.toArray(new String[list.size()]));
@@ -73,12 +95,16 @@ public class RoomJPanel extends JPanel implements ActionListener {
         nextButton.addActionListener(this);
 
         JPanel controlPanel = new JPanel();
+        controlPanel.setBounds(0, 540, 800, 49);
         controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         controlPanel.add(prevButton);
         controlPanel.add(favorites);
         controlPanel.add(nextButton);
         controlPanel.setBorder(border);
-        this.add(controlPanel, BorderLayout.SOUTH);
+        this.add(controlPanel);
+        
+        
+        
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -122,5 +148,4 @@ public class RoomJPanel extends JPanel implements ActionListener {
         cache.set(index, image);
         return image;
     }
-
 }

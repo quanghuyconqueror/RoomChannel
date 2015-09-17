@@ -23,6 +23,7 @@ public class RegisterJPanel extends JPanel {
 	private JTextField cityTextField;
 
 	public RegisterJPanel() {
+		setSize(800, 600);
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTop = new JPanel();

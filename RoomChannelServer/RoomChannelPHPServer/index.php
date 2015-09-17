@@ -79,9 +79,9 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		$result = $db->loadAllRoom();
 		if ($result != false) {
 			while ($row = mysql_fetch_assoc($result)) {
-					$rooms[] = $row;
-				}
-				echo json_encode($rooms);
+				$rooms[] = $row;
+			}
+			echo json_encode($rooms);
 		}
 		else {
 			$response["error"] = 1;
@@ -90,6 +90,34 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		}
 		
 	}
+	
+	else if ($tag == 'post_room') {
+		$address = $_POST['address'];
+		$description = $_POST['description'];
+		$latitude = $_POST['latitude'];
+		$longitude = $_POST['longitude'];
+		$city = $_POST['city'];
+		$images = $_POST['images'];
+		$cost = $_POST['cost'];
+		$userPostID = $_POST['userPostID'];
+		
+		$result = $db->postRoom($address, $description, $latitude, $longitude, $city, $images, $cost, $userPostID);
+		
+		if ($result != false) {
+			while ($row = mysql_fetch_assoc($result)) {
+				$rooms[] = $row;
+			}
+			echo json_encode($rooms);
+		}
+		else {
+			$response["error"] = 1;
+            $response["error_msg"] = "Post room failed";
+            echo json_encode($response);
+		}
+		
+		
+	}
+	
 	
 	else {
         echo "Invalid Request";
