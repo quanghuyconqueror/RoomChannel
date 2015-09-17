@@ -39,6 +39,9 @@ public class RoomJPanel extends JPanel implements ActionListener {
         list.add(urlImages + "2.jpg");
         list.add(urlImages + "3.jpg");
         list.add(urlImages + "4.jpg");
+        list.add(urlImages + "5.jpg");
+        list.add(urlImages + "6.jpg");
+        
 
         for (int i = 0; i < list.size(); i++) cache.add(i, null);
 

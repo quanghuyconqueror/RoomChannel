@@ -75,6 +75,22 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		echo $result;
 	}
 	
+	else if ($tag == 'load_all_room') {
+		$result = $db->loadAllRoom();
+		if ($result != false) {
+			while ($row = mysql_fetch_assoc($result)) {
+					$rooms[] = $row;
+				}
+				echo json_encode($rooms);
+		}
+		else {
+			$response["error"] = 1;
+            $response["error_msg"] = "No room found";
+            echo json_encode($response);
+		}
+		
+	}
+	
 	else {
         echo "Invalid Request";
     }

@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -119,6 +120,96 @@ public class MySqlFunctions {
 		}
         
 		return user;
+		
+	}
+	
+	public ArrayList<Room> loadAllRoom() {
+		ArrayList<Room> rooms = null;
+		Map<String,String> params = new LinkedHashMap<>();
+        params.put("tag", "load_all_room");
+        String jsonResponse = sendRequest(params);
+        try {
+			JSONArray roomJSONArray = new JSONArray(jsonResponse);
+			rooms = new ArrayList<Room>();
+			for (int i = 0; i < roomJSONArray.length(); i++) {
+				JSONObject roomJSON = roomJSONArray.getJSONObject(i);
+				Room room = new Room();
+				room.setRoomID(roomJSON.getString("RoomID"));
+				room.setAddress(roomJSON.getString("Address"));
+				room.setDescription(roomJSON.getString("Description"));
+				room.setTimePosted(roomJSON.getString("TimePosted"));
+				room.setLatitude(roomJSON.getString("Latitude"));
+				room.setLongitude(roomJSON.getString("Longitude"));
+				room.setCity(roomJSON.getString("City"));
+				room.setImages(roomJSON.getString("Images"));
+				room.setCost(roomJSON.getString("Cost"));
+				room.setBooked(roomJSON.getString("Booked"));
+				room.setUserPostID(roomJSON.getString("UserPostID"));
+				rooms.add(room);
+			}
+			
+			
+		} catch (JSONException e) {
+			try {
+				JSONObject errorJSON = new JSONObject(jsonResponse);
+				String error = errorJSON.getString("error_msg");
+				System.out.println("Error: " + error);
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+
+		return rooms;
+		
+	}
+	
+	public Room postRoom(String address, String description, String latitude, String longitude, String city, String images, String cost, String userPostID) {
+		Room room = null;
+		Map<String,String> params = new LinkedHashMap<>();
+        params.put("tag", "post_room");
+        params.put("address", address);
+        params.put("description", description);
+        params.put("latitude", latitude);
+        params.put("longitude", longitude);
+        params.put("city", city);
+        params.put("images", images);
+        params.put("cost", cost);
+        params.put("userPostID", userPostID);
+
+        String jsonResponse = sendRequest(params);
+		
+        try {
+			JSONArray roomJSONArray = new JSONArray(jsonResponse);
+			
+			JSONObject roomJSON = roomJSONArray.getJSONObject(0);
+			room = new Room();
+			room.setRoomID(roomJSON.getString("RoomID"));
+			room.setAddress(roomJSON.getString("Address"));
+			room.setDescription(roomJSON.getString("Description"));
+			room.setTimePosted(roomJSON.getString("TimePosted"));
+			room.setLatitude(roomJSON.getString("Latitude"));
+			room.setLongitude(roomJSON.getString("Longitude"));
+			room.setCity(roomJSON.getString("City"));
+			room.setImages(roomJSON.getString("Images"));
+			room.setCost(roomJSON.getString("Cost"));
+			room.setBooked(roomJSON.getString("Booked"));
+			room.setUserPostID(roomJSON.getString("UserPostID"));
+		}
+			
+			
+		catch (JSONException e) {
+			try {
+				JSONObject errorJSON = new JSONObject(jsonResponse);
+				String error = errorJSON.getString("error_msg");
+				System.out.println("Error: " + error);
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		return room;
+		
 		
 	}
 	

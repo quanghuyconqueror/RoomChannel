@@ -49,6 +49,19 @@ class DB_Functions {
         }
     }
 	
+	public function loadAllRoom() {
+		mysql_query("set names 'utf8'");
+		$result = mysql_query("SELECT * from Rooms");
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            // room existed 
+            return $result;
+        } else {
+            // room not existed
+            return false;
+        }
+	}
+	
 	public function getUserByUsernameAndPassword($username, $password) {
 		mysql_query("set names 'utf8'");
         $result = mysql_query("SELECT * FROM Users WHERE Username = '$username' AND Password = '$password'");
