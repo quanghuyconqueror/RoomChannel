@@ -24,7 +24,7 @@ public class LoginJPanel extends JPanel {
 		add(lblNewLabel_1);
 		
 		usernameTextField = new JTextField();
-		usernameTextField.setBounds(233, 74, 143, 20);
+		usernameTextField.setBounds(502, 136, 143, 20);
 		add(usernameTextField);
 		usernameTextField.setColumns(10);
 		
