@@ -64,8 +64,9 @@ class DB_Functions {
 	
 	public function postRoom($address, $description, $latitude, $longitude, $city, $images, $cost, $userPostID) {
 		mysql_query("set names 'utf8'");
-		$booked = false;
-		$result = mysql_query("INSERT INTO Rooms(Address, Description, TimePosted, Latitude, Longitude, City, Images, Cost, Booked, UserPostID) VALUES('$address', '$description', NOW(), '$latitude', '$longitude', '$city', '$images', '$cost', '$booked', '$userPostID')");
+		$booked = "0";
+		$date = date('Y-m-d H:i:s');
+		$result = mysql_query("INSERT INTO Rooms(Address, Description, TimePosted, Latitude, Longitude, City, Images, Cost, Booked, UserPostID) VALUES('$address', '$description', '$date', '$latitude', '$longitude', '$city', '$images', '$cost', '$booked', '$userPostID')");
 		if ($result) {
 			$lastPostID = mysql_insert_id();
 			$room = mysql_query("SELECT * FROM Rooms WHERE RoomID = '$lastPostID'");

@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class RoomJPanel extends JPanel implements ActionListener {
@@ -72,7 +74,7 @@ public class RoomJPanel extends JPanel implements ActionListener {
 		backButton.setIcon(backIcon);
         
         titlePanel.add(backButton);
-        imageLabel.setBounds(0, 50, 800, 490);
+        imageLabel.setBounds(70, 52, 660, 378);
 
         imageLabel.setIcon(getImage(0));
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -81,22 +83,46 @@ public class RoomJPanel extends JPanel implements ActionListener {
 
         favorites = new JComboBox(
             list.toArray(new String[list.size()]));
+        favorites.setBounds(339, 9, 53, 40);
         favorites.setActionCommand("favs");
         favorites.addActionListener(this);
+        
+        prevButton.setLocation(290, 9);
 
-        prevButton.setText("\u22b2Prev");
-        prevButton.setFont(sans);
+        prevButton.setText("");
+        prevButton.setSize(40, 40);
+        ImageIcon prevIcon = new ImageIcon("icon/prev_icon.png");
+		Image imgPrev = prevIcon.getImage();
+		Image newimgPrev = imgPrev.getScaledInstance(prevButton.getWidth(), prevButton.getHeight(), Image.SCALE_SMOOTH);
+		prevIcon = new ImageIcon(newimgPrev);
+		prevButton.setIcon(prevIcon);
         prevButton.setActionCommand("prev");
+        
         prevButton.addActionListener(this);
+        nextButton.setBounds(397, 9, 79, 31);
+        
 
-        nextButton.setText("Next\u22b3");
-        nextButton.setFont(sans);
+        nextButton.setText("");
+        nextButton.setSize(40, 40);
+        ImageIcon nextIcon = new ImageIcon("icon/next_icon.png");
+		Image imgNext = nextIcon.getImage();
+		final Image newimgNext = imgNext.getScaledInstance(nextButton.getWidth(), nextButton.getHeight(), Image.SCALE_SMOOTH);
+		nextIcon = new ImageIcon(newimgNext);
+		nextButton.setIcon(nextIcon);
         nextButton.setActionCommand("next");
         nextButton.addActionListener(this);
+        
+        prevButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		prevButton.setIcon(new ImageIcon(newimgNext));
+        	}
+        });
+        
 
         JPanel controlPanel = new JPanel();
-        controlPanel.setBounds(0, 540, 800, 49);
-        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        controlPanel.setBounds(0, 540, 800, 60);
+        controlPanel.setLayout(null);
         controlPanel.add(prevButton);
         controlPanel.add(favorites);
         controlPanel.add(nextButton);

@@ -2,6 +2,7 @@
 header("Content-Type: text/html;charset=UTF-8");
 
 if (isset($_POST['tag']) && $_POST['tag'] != '') {
+	date_default_timezone_set("Asia/Bangkok");
     // get tag
     $tag = $_POST['tag'];
 
