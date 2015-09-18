@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class TimeFunctions {
 	private static final String FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss"; 
-	DateFormat dateFormat;
+	private DateFormat dateFormat;
 	
 	public TimeFunctions() {
 		dateFormat = new SimpleDateFormat(FORMAT_PATTERN);

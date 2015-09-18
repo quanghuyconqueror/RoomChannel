@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
@@ -142,6 +143,13 @@ public class ChannelJPanel extends JPanel {
 		add(btnNewButton);
 		
 		JButton btnTmTheoThnh = new JButton("T\u00ECm theo th\u00E0nh ph\u1ED1");
+		btnTmTheoThnh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChooseCityDialog dialog = new ChooseCityDialog();
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
 		btnTmTheoThnh.setBounds(10, 264, 133, 23);
 		add(btnTmTheoThnh);
 		

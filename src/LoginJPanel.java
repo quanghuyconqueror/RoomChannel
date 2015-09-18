@@ -1,3 +1,4 @@
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,11 +25,21 @@ public class LoginJPanel extends JPanel {
 		add(lblNewLabel_1);
 		
 		usernameTextField = new JTextField();
+		usernameTextField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passwordTextField.requestFocus();
+			}
+		});
 		usernameTextField.setBounds(502, 136, 143, 20);
 		add(usernameTextField);
 		usernameTextField.setColumns(10);
 		
 		passwordTextField = new JTextField();
+		passwordTextField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginApplication();
+			}
+		});
 		passwordTextField.setBounds(502, 258, 143, 20);
 		add(passwordTextField);
 		passwordTextField.setColumns(10);
@@ -36,27 +47,7 @@ public class LoginJPanel extends JPanel {
 		JButton loginButton = new JButton("Đăng nhập");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = usernameTextField.getText();
-				String password = passwordTextField.getText();
-				MySqlFunctions mySqlFunctions = new MySqlFunctions();
-				MainJFrame.userLogin = mySqlFunctions.login(username, password);
-				if (MainJFrame.userLogin == null) {
-					JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-					usernameTextField.setText("");
-					passwordTextField.setText("");
-				}
-				else {
-					MainJFrame.contentPane.removeAll();
-					MainJFrame.contentPane.validate();
-					MainJFrame.contentPane.repaint();
-					
-					MainJFrame.contentPane.add(MainJFrame.channelPanel);
-					MainJFrame.contentPane.validate();
-					MainJFrame.contentPane.repaint();
-					
-					JOptionPane.showMessageDialog(null, "Chúc mừng! Bạn đã đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-					
-				}
+				loginApplication();
 			}
 		});
 		loginButton.setBounds(329, 326, 124, 23);
@@ -76,6 +67,35 @@ public class LoginJPanel extends JPanel {
 		});
 		registerButton.setBounds(521, 326, 124, 23);
 		add(registerButton);
+		
+		JLabel backgroundLabel = new JLabel();
+		backgroundLabel.setBounds(0, 0, 800, 600);
+		backgroundLabel.setIcon(new ImageIcon("icon/background_login.png"));
+		add(backgroundLabel);
 
+	}
+	
+	private void loginApplication() {
+		String username = usernameTextField.getText();
+		String password = passwordTextField.getText();
+		MySqlFunctions mySqlFunctions = new MySqlFunctions();
+		MainJFrame.userLogin = mySqlFunctions.login(username, password);
+		if (MainJFrame.userLogin == null) {
+			JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+			usernameTextField.setText("");
+			passwordTextField.setText("");
+		}
+		else {
+			MainJFrame.contentPane.removeAll();
+			MainJFrame.contentPane.validate();
+			MainJFrame.contentPane.repaint();
+			
+			MainJFrame.contentPane.add(MainJFrame.channelPanel);
+			MainJFrame.contentPane.validate();
+			MainJFrame.contentPane.repaint();
+			
+			JOptionPane.showMessageDialog(null, "Chúc mừng! Bạn đã đăng nhập thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			
+		}
 	}
 }
