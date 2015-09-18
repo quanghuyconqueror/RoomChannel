@@ -1,53 +1,76 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
+import java.awt.Color;
 
 
 public class ChooseCityDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	private String[] cityItems = {"Đà Nẵng", "Quảng Nam", "Huế", "Hà Nội"};
 	public ChooseCityDialog() {
 		setBounds(100, 100, 450, 300);
+		setTitle("Chọn tỉnh / thành phố");
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(123, 100, 216, 22);
-		contentPanel.add(comboBox);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
+		for (int i = 0; i < cityItems.length; i++) {
+			comboBox.addItem(cityItems[i]);
 		}
+		contentPanel.add(comboBox);
+		
+		final JLabel backLabel = new JLabel();
+		backLabel.setBounds(10, 10, 32, 32);
+		backLabel.setIcon(new ImageIcon("icon/back_nofill.png"));
+		
+		backLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		backLabel.setIcon(new ImageIcon("icon/back_fill.png"));
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		backLabel.setIcon(new ImageIcon("icon/back_nofill.png"));
+        	}
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		dispose();
+        	}
+        });
+		contentPanel.add(backLabel);
+		
+		JLabel searchLabel = new JLabel();
+		
+		searchLabel.setBounds(400, 230, 32, 32);
+		searchLabel.setIcon(new ImageIcon("icon/search_icon.png"));
+		searchLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				ChannelJPanel.cityDialogChose = (String) comboBox.getSelectedItem();
+				dispose();
+			}
+		});
+			
+		contentPanel.add(searchLabel);
+		
 	}
+	
 }

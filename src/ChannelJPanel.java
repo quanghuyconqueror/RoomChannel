@@ -1,23 +1,17 @@
 import javax.imageio.ImageIO;
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
@@ -31,6 +25,10 @@ public class ChannelJPanel extends JPanel {
 	
 	private ArrayList<Room> rooms = null;
 	public static ArrayList<ImageIcon> cacheLogo = null;
+	public static String cityDialogChose = "";
+	private RoomListModel model;
+	private JList list;
+	private JScrollPane scrollPane;
 	
 	public ChannelJPanel() {
 		setSize(800, 600);
@@ -68,11 +66,11 @@ public class ChannelJPanel extends JPanel {
 		MySqlFunctions mySqlFunctions = new MySqlFunctions();
 		rooms = mySqlFunctions.loadAllRoom();
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(153, 74, 647, 515);
 		add(scrollPane);
 		Date currentDate = new Date();
-		DefaultListModel model = new DefaultListModel();
+		model = new RoomListModel();
 		if (rooms != null) {
 			for (int i = 0; i < rooms.size(); i++) {
 				model.addElement(rooms.get(i));
@@ -98,7 +96,7 @@ public class ChannelJPanel extends JPanel {
 			}
 		}
 		
-		JList list = new JList(model);
+		list = new JList(model);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -117,6 +115,7 @@ public class ChannelJPanel extends JPanel {
 				}
 			}
 		});
+		
 		
 		list.setCellRenderer(new RoomCellRenderer());
 		
@@ -138,22 +137,33 @@ public class ChannelJPanel extends JPanel {
 		submitRoom.setBounds(10, 126, 101, 23);
 		add(submitRoom);
 		
-		JButton btnNewButton = new JButton("T\u00ECm g\u1EA7n \u0111\u00E2y");
-		btnNewButton.setBounds(10, 84, 118, 23);
-		add(btnNewButton);
+		JButton searchAround = new JButton("T\u00ECm g\u1EA7n \u0111\u00E2y");
+		searchAround.setBounds(10, 84, 118, 23);
+		add(searchAround);
 		
-		JButton btnTmTheoThnh = new JButton("T\u00ECm theo th\u00E0nh ph\u1ED1");
-		btnTmTheoThnh.addActionListener(new ActionListener() {
+		JButton searchByCity = new JButton("Tìm theo thành phố");
+		searchByCity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ChooseCityDialog dialog = new ChooseCityDialog();
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
+				dialog.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						if (!cityDialogChose.equals("")) {
+							System.out.println("Tỉnh / thành phố đã chọn: " + cityDialogChose);
+							refreshRooms();
+							cityDialogChose = "";
+						}
+						
+					}
+				});
 			}
 		});
-		btnTmTheoThnh.setBounds(10, 264, 133, 23);
-		add(btnTmTheoThnh);
+		searchByCity.setBounds(10, 264, 133, 23);
+		add(searchByCity);
 		
-		JButton btnNewButton_1 = new JButton("K\u00EAnh chia s\u1EBB");
+		JButton btnNewButton_1 = new JButton("Kênh chia sẻ");
 		btnNewButton_1.setBounds(10, 314, 101, 23);
 		add(btnNewButton_1);
 		
@@ -161,5 +171,36 @@ public class ChannelJPanel extends JPanel {
 		
 	
 
+	}
+	private void refreshRooms() {
+		model.clear();
+		cacheLogo.clear();
+		for (int i = 0; i < rooms.size(); i++) {
+			model.addElement(rooms.get(i));
+			
+			TimeFunctions timeFunctions = new TimeFunctions();
+				
+			Date postTime = timeFunctions.formatDate(rooms.get(i).getTimePosted());
+			Date currentDate = new Date();
+			String difTime = timeFunctions.calculteDateDif(currentDate, postTime);
+			System.out.println("Dif time: " + difTime);
+				
+				
+			
+			BufferedImage img = null;
+			try {
+			    img = ImageIO.read(new URL("http://enddev.site50.net/RoomChannelPHPServer/RoomImages/1.jpg"));
+			} catch (IOException e) {
+			    e.printStackTrace();
+			}
+			Image dimg = img.getScaledInstance(60, 60,
+			            Image.SCALE_SMOOTH);
+			ImageIcon logoIcon = new ImageIcon(dimg);
+			cacheLogo.add(logoIcon);
+			model.fireContentsChanged(model, 0, model.size());
+			
+			
+		}
+		
 	}
 }
