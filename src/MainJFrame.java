@@ -23,12 +23,16 @@ import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JSpinner;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 
 public class MainJFrame extends JFrame {
 
 	public static JPanel contentPane;
 	public static JPanel loginPanel;
+	private static JPanel loginPanel_1;
 	public static JPanel channelPanel;
 	public static JPanel registerPanel;
 	public static JPanel googleMapPanel;
@@ -75,12 +79,10 @@ public class MainJFrame extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
-		loginPanel = new LoginJPanel();
-		contentPane.add(loginPanel);
+		loginPanel_1 = new LoginJPanel();
+		contentPane.add(loginPanel_1);
 		
 		
 		
 	}
-	
-	
 }

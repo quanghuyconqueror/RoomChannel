@@ -1,16 +1,19 @@
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-
-import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class PostRoomJPanel extends JPanel {
@@ -120,6 +123,65 @@ public class PostRoomJPanel extends JPanel {
         	}
         });
 		add(backLabel);
+		
+		JLabel uploadLabel1 = new JLabel();
+		uploadLabel1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				openFileChooser();
+			}
+		});
+		uploadLabel1.setBounds(487, 118, 45, 45);
+		uploadLabel1.setIcon(new ImageIcon("icon/upload_icon.png"));
+		add(uploadLabel1);
+		
+		JLabel uploadLabel2 = new JLabel();
+		uploadLabel2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				openFileChooser();
+			}
+		});
+		uploadLabel2.setBounds(487, 206, 45, 45);
+		uploadLabel2.setIcon(new ImageIcon("icon/upload_icon.png"));
+		add(uploadLabel2);
+		
+		JLabel uploadLabel3 = new JLabel();
+		uploadLabel3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				openFileChooser();
+			}
+		});
+		uploadLabel3.setBounds(487, 297, 45, 45);
+		uploadLabel3.setIcon(new ImageIcon("icon/upload_icon.png"));
+		add(uploadLabel3);
 
+	}
+	
+	// cho phép chọn file image để upload lên server
+	private void openFileChooser() {
+		
+		JFileChooser fc = new JFileChooser();
+		
+		// thiết đặt bộ lọc file
+		FileFilter imageFilter = new FileNameExtensionFilter("Images", "jpg", "png", "gif", "bmp");
+		fc.setFileFilter(imageFilter);
+		fc.setAcceptAllFileFilterUsed(false);
+		
+		// hiển thị dialog chọn file và trả về kết quả
+        int res = fc.showOpenDialog(this);
+
+        try {
+            if (res == JFileChooser.APPROVE_OPTION) {
+            	System.out.println(fc.getSelectedFile().getAbsolutePath());
+            }
+            else {
+                JOptionPane.showMessageDialog(null,
+                        "You must select one image to be the reference.", "Aborting...",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception iOException) {
+        }
 	}
 }

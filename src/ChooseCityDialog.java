@@ -25,12 +25,11 @@ public class ChooseCityDialog extends JDialog {
 		setTitle("Chọn tỉnh / thành phố");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(123, 100, 216, 22);
+		comboBox.setBounds(121, 121, 216, 22);
 		for (int i = 0; i < cityItems.length; i++) {
 			comboBox.addItem(cityItems[i]);
 		}
@@ -71,6 +70,10 @@ public class ChooseCityDialog extends JDialog {
 			
 		contentPanel.add(searchLabel);
 		
+		JLabel backgroundLabel = new JLabel();
+		backgroundLabel.setBounds(0, 0, 450, 273);
+		backgroundLabel.setIcon(new ImageIcon("icon/background_login.png"));
+		contentPanel.add(backgroundLabel);
+		
 	}
-	
 }
