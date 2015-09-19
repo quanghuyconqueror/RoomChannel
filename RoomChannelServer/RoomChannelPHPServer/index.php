@@ -89,7 +89,22 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $response["error_msg"] = "No room found";
             echo json_encode($response);
 		}
-		
+	}
+	
+	else if ($tag == 'load_room_by_city') {
+		$city = $_POST['city'];
+		$result = $db->loadRoomByCity($city);
+		if ($result != false) {
+			while ($row = mysql_fetch_assoc($result)) {
+				$rooms[] = $row;
+			}
+			echo json_encode($rooms);
+		}
+		else {
+			$response["error"] = 1;
+            $response["error_msg"] = "No room found";
+            echo json_encode($response);
+		}
 	}
 	
 	else if ($tag == 'post_room') {
@@ -114,11 +129,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 			$response["error"] = 1;
             $response["error_msg"] = "Post room failed";
             echo json_encode($response);
-		}
-		
-		
+		}		
 	}
-	
 	
 	else {
         echo "Invalid Request";

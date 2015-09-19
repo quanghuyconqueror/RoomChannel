@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -85,7 +86,7 @@ public class ChannelJPanel extends JPanel {
 				
 				BufferedImage img = null;
 				try {
-				    img = ImageIO.read(new URL("http://enddev.site50.net/RoomChannelPHPServer/RoomImages/1.jpg"));
+				    img = ImageIO.read(new File("icon/background_login.png"));
 				} catch (IOException e) {
 				    e.printStackTrace();
 				}
@@ -121,7 +122,7 @@ public class ChannelJPanel extends JPanel {
 		
 		scrollPane.setViewportView(list);
 		
-		JButton submitRoom = new JButton("\u0110\u0103ng ph\u00F2ng");
+		JButton submitRoom = new JButton("Đăng phòng");
 		submitRoom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -137,7 +138,7 @@ public class ChannelJPanel extends JPanel {
 		submitRoom.setBounds(10, 126, 101, 23);
 		add(submitRoom);
 		
-		JButton searchAround = new JButton("T\u00ECm g\u1EA7n \u0111\u00E2y");
+		JButton searchAround = new JButton("Tìm gần đây");
 		searchAround.setBounds(10, 84, 118, 23);
 		add(searchAround);
 		
@@ -151,7 +152,6 @@ public class ChannelJPanel extends JPanel {
 					@Override
 					public void windowClosed(WindowEvent e) {
 						if (!cityDialogChose.equals("")) {
-							System.out.println("Tỉnh / thành phố đã chọn: " + cityDialogChose);
 							refreshRooms();
 							cityDialogChose = "";
 						}
@@ -175,6 +175,13 @@ public class ChannelJPanel extends JPanel {
 	private void refreshRooms() {
 		model.clear();
 		cacheLogo.clear();
+		rooms.clear();
+		System.out.println("Tỉnh / thành phố đã chọn: " + cityDialogChose);
+		
+		MySqlFunctions mySqlFunctions = new MySqlFunctions();
+		
+		rooms = mySqlFunctions.loadRoomByCity(cityDialogChose);
+		
 		for (int i = 0; i < rooms.size(); i++) {
 			model.addElement(rooms.get(i));
 			
@@ -189,7 +196,7 @@ public class ChannelJPanel extends JPanel {
 			
 			BufferedImage img = null;
 			try {
-			    img = ImageIO.read(new URL("http://enddev.site50.net/RoomChannelPHPServer/RoomImages/1.jpg"));
+				img = ImageIO.read(new File("icon/background_login.png"));
 			} catch (IOException e) {
 			    e.printStackTrace();
 			}

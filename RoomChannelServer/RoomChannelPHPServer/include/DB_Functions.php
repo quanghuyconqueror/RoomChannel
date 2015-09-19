@@ -62,6 +62,19 @@ class DB_Functions {
         }
 	}
 	
+	public function loadRoomByCity($city) {
+		mysql_query("set names 'utf8'");
+		$result = mysql_query("SELECT * from Rooms WHERE City = '$city'");
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            // room existed 
+            return $result;
+        } else {
+            // room not existed
+            return false;
+        }
+	}
+	
 	public function postRoom($address, $description, $latitude, $longitude, $city, $images, $cost, $userPostID) {
 		mysql_query("set names 'utf8'");
 		$booked = "0";

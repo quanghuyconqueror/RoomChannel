@@ -130,7 +130,7 @@ public class MySqlFunctions {
 		
 		ArrayList<Room> rooms = null;
 		Map<String, String> params = new LinkedHashMap<>();
-		params.put("tag", "load_all_room");
+		params.put("tag", "load_room_by_city");
 		params.put("city", city);
 		String jsonResponse = sendRequest(params);
 		try {
