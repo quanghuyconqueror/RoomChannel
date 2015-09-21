@@ -6,6 +6,7 @@ import java.net.URLConnection;
 
 
 public class ImageUploader {
+	//ss
 	private final String CrLf = "\r\n";
 
 	private static final String UPLOAD_URL = "http://enddev.site50.net/RoomChannelPHPServer/";
