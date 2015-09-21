@@ -161,7 +161,7 @@ public class PostRoomJPanel extends JPanel {
 	
 	// cho phép chọn file image để upload lên server
 	private void openFileChooser() {
-		
+		//ss
 		JFileChooser fc = new JFileChooser();
 		
 		// thiết đặt bộ lọc file
