@@ -23,7 +23,7 @@ import java.net.URL;
 
 
 public class ChannelJPanel extends JPanel {
-	
+	//sss
 	private ArrayList<Room> rooms = null;
 	public static ArrayList<ImageIcon> cacheLogo = null;
 	public static String cityDialogChose = "";
